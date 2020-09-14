@@ -1,0 +1,30 @@
+{
+  "name": "doantotnghiep",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.server.js",
+  "scripts": {
+    "debug": "nodemon -inspect index.server.js",
+    "start": "node index.server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.server"
+  },
+  "author": "Pham Tri Quang - 1751010117",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parse": "^0.1.0",
+    "cookie-parse": "^0.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.5",
+    "slugify": "^1.4.5"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4"
+  }
+}
