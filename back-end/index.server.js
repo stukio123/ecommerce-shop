@@ -1,16 +1,17 @@
 //Define app
 const express = require('express')
 const env = require('dotenv').config()
-const bodyParse = require('body-parser')
 const mongoose = require('mongoose')
-const userRoute = require('./Routes/auth')
-const adminRoute = require('./Routes/admin/auth')
+const userRoute = require('./routes/auth')
+const adminRoute = require('./routes/admin/auth')
+const categoryRoute = require('./routes/category')
+const productRoute = require('./routes/product')
 
 const app = express()
 
 //Set public static folder
 app.use(express.static(__dirname+ '/public'))
-app.use(bodyParse())
+app.use(express.json())
 
 //Set View Engine 
 const expressHbs = require('express-handlebars')
@@ -44,7 +45,8 @@ app.get('/',(req,res,next) => {
 
 app.use('/api',userRoute)
 app.use('/api',adminRoute)
-
+app.use('/api',categoryRoute)
+app.use('/api',productRoute)
 
 app.get('/:page',(req,res,next) => {
     let page = req.params.page
