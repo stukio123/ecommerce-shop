@@ -5,7 +5,8 @@ exports.validateSignupRequest = [
     check('firstName').notEmpty().withMessage('Họ và tên lót không được để trống'),
     check('lastName').notEmpty().withMessage('Tên không được để trống'),
     check('email').isEmail().withMessage('Email không hợp lệ'),
-    check('password').isLength({min: 8}).withMessage('Mật khẩu phải nhiều hơn 8 ký tự')
+    check('password').isLength({min: 8}).withMessage('Mật khẩu phải nhiều hơn 8 ký tự'),
+    check('date_of_birth').isDate().withMessage('Ngày tháng năm sinh không hợp lệ')
 ]
 
 exports.validateSighinRequest = [
@@ -25,24 +26,24 @@ exports.isRequestValidated = (req,res,next) => {
 exports.requireSignIn = (req,res,next) =>{
 
     if(req.headers.authorization){
-        const token =req.headers.authorization.split(" ")[1]
-        const user = jwt.verify(token,process.env.JWT_SECRET)
+        const token = req.headers.authorization.split(" ")[1]
+        const user = jwt.verify(token, process.env.JWT_SECRET)
         req.user = user
     }else{
-        return res.status(500).json({message: 'Authorization required'})
+        return res.status(400).json({ message: 'Authorization required' });
     }
-    next()
+    next();
 }
 
 exports.userMiddleware = (req,res,next) => {
     console.log(req.user.role)
-    if(req.user.role != 'Custommer')
+    if(req.user.role !== 'Khách Hàng')
         return res.status(400).json({message: 'User access denied'})
     next()
 }
 exports.adminMiddleware = (req,res,next) => {
     console.log(req.user.role)
-    if(req.user.role != 'Admin')
+    if(req.user.role !== 'Quản Trị')
         return res.status(400).json({message: 'Admin access denied'})
     next()
 }

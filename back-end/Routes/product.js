@@ -1,10 +1,22 @@
 const express = require('express')
+const router = express.Router()
 const { createProduct } = require('../controllers/product')
 const {requireSignIn, adminMiddleware} = require('../middleware/auth')
 const multer = require('multer')
-const upload = multer({dest: 'uploads/'})
-const router = express.Router()
+const shortid = require('shortid')
+const path = require('path')
 
-router.post('/product/create',requireSignIn,adminMiddleware,upload.single('productImages'),createProduct)
+const storage = multer.diskStorage({
+    destination: function(req,file,callback){
+        callback(null, path.join(path.dirname(__dirname), 'uploads'))
+    },
+    filename: function(req,file,callback){
+        callback(null, shortid.generate()+'.png')
+    }
+})
+
+const upload = multer({storage})
+
+router.post('/products/create',requireSignIn,adminMiddleware,upload.array('productImage'),createProduct)
 
 module.exports = router

@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
+const addressSchema = new mongoose.Schema({
+    street: {type: String},
+    district: {type: String},
+    ward: {type: String},
+    City: {type: String}
+})
+
 const usersSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        trim: true,
-        min: 3,
-        max: 32
-    },
     lastName: {
         type: String,
         required: true,
@@ -16,13 +16,12 @@ const usersSchema = new mongoose.Schema({
         min: 3,
         max: 32
     },
-    userName: {
+    firstName: {
         type: String,
         required: true,
         trim: true,
-        unique: true,
-        index: true,
-        lowercase: true
+        min: 3,
+        max: 32
     },
     email: {
         type: String,
@@ -31,32 +30,38 @@ const usersSchema = new mongoose.Schema({
         unique: true,
         lowercase: true
     },
-    hashPassWord:{
+    hash_password:{
         type: String,
         required: true
     },
     role: {
         type: String,
-        enum: ['Custommer','Admin','Staff'],
-        default: 'Custommer'
+        enum: ['Khách Hàng','Quản Trị','Nhân Viên'],
+        default: 'Khách Hàng'
     },
-    Address: { type: String},
-    Tel: { type: String},
-    profilePicture: {type: String}
+    address: [addressSchema],
+    tel: { type: String},
+    avatar: {type: String},
+    dat_of_birth: {type: Date}
 },{timestamps: true})
 
+
 usersSchema.virtual('password').set(function(password){
-    this.hashPassWord = bcrypt.hashSync(password,10)
-    console.log(`${this.hashPassWord} và ${password}`)
+    this.hash_password = bcrypt.hashSync(password,10)
+    console.log(`${this.hash_password} và ${password}`)
 })
 
 usersSchema.virtual('fullName').get(function(){
-    return `${this.firstName} ${this.lastName}`
+    return `${this.lastName} ${this.firstName}`
+})
+
+usersSchema.virtual('Addresses').get(function(){
+    return `${this.street}, ${this.ward}, ${this.district},${this.City}`
 })
 
 usersSchema.methods = {
     authenticate: function(password){
-        return bcrypt.compareSync(password,this.hashPassWord)
+        return bcrypt.compareSync(password,this.hash_password)
     }
 }
 

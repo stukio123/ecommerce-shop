@@ -10,20 +10,25 @@ const productsSchema = mongooes.Schema({
         require: true,
         unique: true
     },
-    price: {
-        type: Number,
-        require: true,
-    },
+    brand:{type: String, require: true},
     description:{
         type: String,
         require: true,
         trim: true
     },
+    attrs:[{
+        size: {type: String, require:true},
+        stock: {type: Number, default: 1},
+        price: {type: Number, require: true, default: 0},
+        locale: {type: String, require: true}
+    }],
     discountPrice:{
-        type: Number
+        type: Number,
+        require: true,
+        default: 0
     },
     productImages: [{
-        imgs: {type: String}
+        img: {type: String}
     }],
     mainImage: {
         type: String
@@ -33,10 +38,10 @@ const productsSchema = mongooes.Schema({
         review: String,
         rating: Number
     }],
-    category: {type: mongooes.Schema.Types.ObjectId, ref:'Categories'},
+    category: {type: mongooes.Schema.Types.ObjectId, ref:'Categories',require: true },
     createdBy: {type: mongooes.Schema.Types.ObjectId, ref: 'Users'},
     createdDate: Date,
-    uodateBy: {type: mongooes.Schema.Types.ObjectId, ref: 'Users'},
+    updateBy: {type: mongooes.Schema.Types.ObjectId, ref: 'Users'},
     updateAt: Date
 },{timestamps: true})
 

@@ -48,8 +48,8 @@ exports.getCategory = (req,res) => {
     .exec((error,categories) => {
         if(error) return res.status(400).json({ error})
         if(categories){
-            const categoryLish = createCategories(categories)
-            return res.status(200).json({categoryLish})
+            const categoryList = createCategories(categories)
+            return res.status(200).json({categoryList})
         }
     })
 }

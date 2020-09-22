@@ -1,0 +1,132 @@
+@hostname = http://localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+@content-type = application/json
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjY4ZDFiNmNiMTUxMTAwYzQ2ZTdiNjkiLCJyb2xlIjoiUXXhuqNuIFRy4buLIiwiaWF0IjoxNjAwNzA3OTY2LCJleHAiOjE2MTYyNTk5NjZ9.wrLpuxwAUgXp2eQ2_kC1knfXZH10OiOOoY4QcRKLjQk
+@JSON = application/json
+@form-data = multipart/form-data
+###
+GET {{host}}  HTTP/1.1
+
+###
+
+POST {{host}}/api/signup 
+Content-Type: {{content-type}} 
+
+{
+    "firstName":"Phạm Trí",
+    "lastName":"Quang",
+    "email":"a@gmail.com",
+    "password":"12345678",
+    "address":{
+        "street":"86 Tản Đà",
+        "ward":"Phường 11",
+        "district":"Quận 5",
+        "city":"TP. Hồ Chí Minh"
+    },
+    "tel":"+84913368752",
+    "date_of_birth":"1999/11/01",
+    "role":"Quản Trị"
+}
+
+###
+POST {{host}}/api/signup
+Content-Type: {{content-type}}
+
+{
+    "firstName":"Phạm Trí",
+    "lastName":"Quang",
+    "email":"a1@gmail.com",
+    "password":"12345678",
+    "address":{
+        "street":"86 Tản Đà",
+        "ward":"Phường 11",
+        "district":"Quận 5",
+        "city":"TP. Hồ Chí Minh"
+    },
+    "tel":"+84913368752",
+    "date_of_birth":"1999/11/01"
+}
+
+###Test user Login
+POST {{host}}/api/signin HTTP/1.1
+Content-Type: {{content-type}}
+
+{
+    "email":"a@gmail.com",
+    "password":"12345678"
+}
+
+###Test Admin Login
+
+POST {{host}}/api/admins/signin
+Content-Type: {{content-type}}
+
+{
+    "email":"a1@gmail.com",
+    "password":"12345678"
+}
+
+###
+POST {{host}}/api/admins/signin
+Authorization: bearer {{token}}
+Content-Type: {{content-type}}
+
+{
+    "email":"a@gmail.com",
+    "password":"12345678"
+}
+
+###
+GET {{host}}/api/category/getCategory
+
+###Tạo sản phẩm
+POST {{host}}/api/products/create
+Authorization: bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
+
+NIKE AIR FORCE 1 LOW DOUBLE AIR LOW WHITE BLACK
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="attrs"
+
+{
+    "size":"9",
+    "locale":"US",
+    "price":"3300000",
+},
+{
+    "size":"9.5",
+    "locale":"US",
+    "price":"3300000",
+}
+
+------WebkitFormBoundary7MA4YKxkTrZu0gW
+Content-Disposition: form-data; name="category"
+
+5f5f62489c93530754dd392f
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="description"
+
+Một thiết kế hiện đại pha trộn phong cách cổ điển với những chi tiết mới mẻ, sắc nét
+
+- Chất liệu da tổng hợp
+
+- Thiết kế lỗ đục trên thân giày tạo cảm giác thông thoáng
+
+- Trang bị lót đệm khí nén êm
+
+- Đế cao su bền và nhẹ
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file", filename="5f2411e891903.jpg"
+Content-Type: image/jpg
+
+<C:\Users\stuki\Downloads\5f2411e891903.jpg
+
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

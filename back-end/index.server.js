@@ -6,6 +6,8 @@ const userRoute = require('./routes/auth')
 const adminRoute = require('./routes/admin/auth')
 const categoryRoute = require('./routes/category')
 const productRoute = require('./routes/product')
+const cartRoute = require('./routes/cart')
+
 
 const app = express()
 
@@ -47,6 +49,7 @@ app.use('/api',userRoute)
 app.use('/api',adminRoute)
 app.use('/api',categoryRoute)
 app.use('/api',productRoute)
+app.use('/api',cartRoute)
 
 app.get('/:page',(req,res,next) => {
     let page = req.params.page
@@ -56,6 +59,6 @@ app.get('/:page',(req,res,next) => {
 
 //Set Server port & Start port 
 app.set('port', process.env.PORT || 5000 )
-app.listen(app.get('port'), () => {
+const server = app.listen(app.get('port'), () => {
      console.log(`Server is running on Port: ${app.get('port')}`)
  })
