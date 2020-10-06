@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { createProduct } = require('../controllers/product')
+const { createProduct, delProduct } = require('../controllers/product')
 const {requireSignIn, adminMiddleware} = require('../middleware/auth')
 const multer = require('multer')
 const shortid = require('shortid')
@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage})
 
-router.post('/products/create',requireSignIn,adminMiddleware,upload.array('productImage'),createProduct)
+router.post('/products/create',requireSignIn,adminMiddleware,createProduct)
+router.delete('/products/delete',requireSignIn,adminMiddleware, delProduct)
 
 module.exports = router
