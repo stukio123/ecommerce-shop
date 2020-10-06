@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const Users = require('../../models/user')
-const { SignIn, requireSignIn } = require('../../controllers/admin/auth')
+const { SignIn, SignOut} = require('../../controllers/admin/auth')
+const {adminMiddleware,validateSighinRequest,isRequestValidated, requireSignIn} = require('../../middleware/auth')
 
-router.post('/admins/signin',SignIn)
-//router.post('/admins/signup',SignUp)
-
+router.post('/admin/signin', validateSighinRequest, isRequestValidated,SignIn)
+router.post('/admin/signout',requireSignIn,SignOut)
 
 module.exports = router
